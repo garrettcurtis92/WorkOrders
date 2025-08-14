@@ -1,0 +1,60 @@
+@page
+@model CreateModel
+@{
+    ViewData["Title"] = "Create Work Order";
+}
+<h1>Create Work Order</h1>
+<hr />
+
+<div class="row">
+  <div class="col-md-8 col-lg-7">
+    <form method="post">
+      <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+      <div class="mb-3">
+        <label asp-for="WorkOrder.Title" class="form-label"></label>
+        <input asp-for="WorkOrder.Title" class="form-control" />
+        <span asp-validation-for="WorkOrder.Title" class="text-danger"></span>
+      </div>
+
+      <div class="mb-3">
+        <label asp-for="WorkOrder.Description" class="form-label"></label>
+        <textarea asp-for="WorkOrder.Description" class="form-control" rows="4"></textarea>
+        <span asp-validation-for="WorkOrder.Description" class="text-danger"></span>
+      </div>
+
+      <div class="mb-3">
+        <label asp-for="WorkOrder.Department" class="form-label"></label>
+        <input asp-for="WorkOrder.Department" class="form-control" />
+        <span asp-validation-for="WorkOrder.Department" class="text-danger"></span>
+      </div>
+
+      <div class="mb-3">
+        <label asp-for="WorkOrder.Priority" class="form-label"></label>
+        <select asp-for="WorkOrder.Priority" class="form-select"
+                asp-items="Html.GetEnumSelectList<WorkOrderPriority>()"></select>
+        <span asp-validation-for="WorkOrder.Priority" class="text-danger"></span>
+      </div>
+
+      <div class="mb-3">
+        <label asp-for="WorkOrder.Status" class="form-label"></label>
+        <select asp-for="WorkOrder.Status" class="form-select"
+                asp-items="Html.GetEnumSelectList<WorkOrderStatus>()"></select>
+        <span asp-validation-for="WorkOrder.Status" class="text-danger"></span>
+      </div>
+
+      <div class="mb-3">
+        <label asp-for="WorkOrder.RequestedBy" class="form-label"></label>
+        <input asp-for="WorkOrder.RequestedBy" class="form-control" />
+        <span asp-validation-for="WorkOrder.RequestedBy" class="text-danger"></span>
+      </div>
+
+      <button type="submit" class="btn btn-primary">Create</button>
+      <a asp-page="Index" class="btn btn-outline-secondary ms-2">Cancel</a>
+    </form>
+  </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
