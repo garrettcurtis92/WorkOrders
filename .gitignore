@@ -1,0 +1,43 @@
+# Build artifacts
+bin/
+obj/
+
+# User-specific files
+*.user
+*.rsuser
+*.suo
+*.userprefs
+*.csproj.user
+
+# Visual Studio / VS Code
+.vs/
+*.code-workspace
+
+# Logs
+*.log
+
+# OS files
+.DS_Store
+
+# Secrets & local settings
+app.db
+appsettings.Development.json
+
+# EF Core Migrations build snapshots (keep migrations themselves)
+[Mm]igrations/**/DesignTimeServicesReference.cs
+
+# Backup & publish
+*.bak
+publish/
+
+# Rider / JetBrains
+.idea/
+*.iml
+
+# Coverage
+coverage/
+*.coverage
+*.coveragexml
+
+# Generated files
+Generated/**
