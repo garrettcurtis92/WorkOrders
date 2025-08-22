@@ -1,8 +1,9 @@
 @page
-@model WorkOrdersIndexModel
+@model IndexModel
 @{
     ViewData["Title"] = "Work Orders";
 }
+
 <h1 class="mb-3">Work Orders</h1>
 
 @if (!string.IsNullOrWhiteSpace(Model.Message))
@@ -10,40 +11,142 @@
     <div class="alert alert-success" role="alert">@Model.Message</div>
 }
 
-<p>
-    <a class="btn btn-primary" asp-page="Create">Create New</a>
-</p>
+<form method="get" class="row g-2 align-items-end mb-3">
+    <div class="col-12 col-sm-6 col-md-3">
+        <label class="form-label">Status</label>
+        <select name="Status" class="form-select">
+            <option value="">All</option>
+            @foreach (var s in Enum.GetValues(typeof(WorkOrderStatus)).Cast<WorkOrderStatus>())
+            {
+                <option value="@s" selected="@(Model.Status == s)">@s</option>
+            }
+        </select>
+    </div>
 
-@if (Model.Items.Count == 0)
-{
-    <div class="alert alert-info">No work orders yet. Click <strong>Create New</strong> to add one.</div>
-}
-else
-{
-<table class="table table-striped table-hover">
-    <thead>
+    <div class="col-12 col-sm-6 col-md-3">
+        <label class="form-label">Priority</label>
+        <select name="Priority" class="form-select">
+            <option value="">All</option>
+            @foreach (var p in Enum.GetValues(typeof(WorkOrderPriority)).Cast<WorkOrderPriority>())
+            {
+                <option value="@p" selected="@(Model.Priority == p)">@p</option>
+            }
+        </select>
+    </div>
+
+    <div class="col-12 col-sm-6 col-md-3">
+        <label class="form-label">Department</label>
+        <select name="Department" class="form-select">
+            <option value="">All</option>
+            @foreach (var d in Model.Departments)
+            {
+                <option value="@d" selected="@(Model.Department == d)">@d</option>
+            }
+        </select>
+    </div>
+
+    <div class="col-12 col-sm-6 col-md-3">
+        <label class="form-label">Search</label>
+        <input name="q" value="@Model.q" class="form-control" placeholder="Title or description..." />
+    </div>
+
+    <div class="col-12 mt-2">
+        <button class="btn btn-primary me-2" type="submit">Apply</button>
+        <a class="btn btn-outline-secondary" href="?">Clear</a>
+        <a class="btn btn-success float-end" asp-page="Create">Create New</a>
+    </div>
+</form>
+
+@if (Model.Items.Count == 0) {
+    <div class="alert alert-info">No results. Adjust your filters or <a asp-page="Create">create a new work order</a>.</div>
+} else {
+    <table class="table table-striped table-hover">
+        <thead>
         <tr>
-            <th>Title</th>
-            <th>Dept</th>
-            <th>Priority</th>
-            <th>Status</th>
+            <th>
+                <a asp-page="./Index"
+                   asp-route-Sort="title"
+                   asp-route-Dir="@(Model.Sort == "title" && Model.Dir != "asc" ? "asc" : "desc")"
+                   asp-route-Status="@(Model.Status?.ToString())"
+                   asp-route-Priority="@(Model.Priority?.ToString())"
+                   asp-route-Department="@Model.Department"
+                   asp-route-q="@Model.q"
+                   asp-route-page="1"
+                   asp-route-pageSize="@Model.pageSize">
+                    Title@(Model.Sort == "title" ? (Model.Dir == "asc" ? " ▲" : " ▼") : "")
+                </a>
+            </th>
+            <th>
+                <a asp-page="./Index"
+                   asp-route-Sort="dept"
+                   asp-route-Dir="@(Model.Sort == "dept" && Model.Dir != "asc" ? "asc" : "desc")"
+                   asp-route-Status="@(Model.Status?.ToString())"
+                   asp-route-Priority="@(Model.Priority?.ToString())"
+                   asp-route-Department="@Model.Department"
+                   asp-route-q="@Model.q"
+                   asp-route-page="1"
+                   asp-route-pageSize="@Model.pageSize">
+                    Dept@(Model.Sort == "dept" ? (Model.Dir == "asc" ? " ▲" : " ▼") : "")
+                </a>
+            </th>
+            <th>
+                <a asp-page="./Index"
+                   asp-route-Sort="priority"
+                   asp-route-Dir="@(Model.Sort == "priority" && Model.Dir != "asc" ? "asc" : "desc")"
+                   asp-route-Status="@(Model.Status?.ToString())"
+                   asp-route-Priority="@(Model.Priority?.ToString())"
+                   asp-route-Department="@Model.Department"
+                   asp-route-q="@Model.q"
+                   asp-route-page="1"
+                   asp-route-pageSize="@Model.pageSize">
+                    Priority@(Model.Sort == "priority" ? (Model.Dir == "asc" ? " ▲" : " ▼") : "")
+                </a>
+            </th>
+            <th>
+                <a asp-page="./Index"
+                   asp-route-Sort="status"
+                   asp-route-Dir="@(Model.Sort == "status" && Model.Dir != "asc" ? "asc" : "desc")"
+                   asp-route-Status="@(Model.Status?.ToString())"
+                   asp-route-Priority="@(Model.Priority?.ToString())"
+                   asp-route-Department="@Model.Department"
+                   asp-route-q="@Model.q"
+                   asp-route-page="1"
+                   asp-route-pageSize="@Model.pageSize">
+                    Status@(Model.Sort == "status" ? (Model.Dir == "asc" ? " ▲" : " ▼") : "")
+                </a>
+            </th>
             <th>Requested By</th>
-            <th>Updated</th>
+            <th>
+                <a asp-page="./Index"
+                   asp-route-Sort="updated"
+                   asp-route-Dir="@(Model.Sort == "updated" && Model.Dir != "asc" ? "asc" : "desc")"
+                   asp-route-Status="@(Model.Status?.ToString())"
+                   asp-route-Priority="@(Model.Priority?.ToString())"
+                   asp-route-Department="@Model.Department"
+                   asp-route-q="@Model.q"
+                   asp-route-page="1"
+                   asp-route-pageSize="@Model.pageSize">
+                    Updated@(Model.Sort == "updated" ? (Model.Dir == "asc" ? " ▲" : " ▼") : "")
+                </a>
+            </th>
             <th></th>
         </tr>
-    </thead>
-    <tbody>
-    @foreach (var w in Model.Items)
-    {
-        <tr>
+        </thead>
+        <tbody>
+        @foreach (var w in Model.Items) {
+            <tr>
             <td>@w.Title</td>
             <td>@w.Department</td>
             <td>@w.Priority</td>
-            <td>
-                <span class="badge text-bg-@(w.Status == WorkOrderStatus.New ? "secondary" : w.Status == WorkOrderStatus.InProgress ? "warning" : "success")">
-                    @w.Status
-                </span>
-            </td>
+                <td>
+                    @{ var statusClass = w.Status switch {
+                            WorkOrderStatus.New => "status-badge status-new",
+                            WorkOrderStatus.InProgress => "status-badge status-inprogress",
+                            WorkOrderStatus.Done => "status-badge status-completed",
+                            _ => "status-badge status-default"
+                        }; }
+                    <span class="@statusClass">@w.Status</span>
+                </td>
             <td>@w.RequestedBy</td>
             <td>@w.UpdatedAt.ToLocalTime().ToString("g")</td>
             <td class="text-end">
@@ -51,8 +154,36 @@ else
                 <a class="btn btn-sm btn-outline-primary" asp-page="Edit" asp-route-id="@w.Id">Edit</a>
                 <a class="btn btn-sm btn-outline-danger" asp-page="Delete" asp-route-id="@w.Id">Delete</a>
             </td>
-        </tr>
-    }
-    </tbody>
-</table>
+            </tr>
+        }
+        </tbody>
+    </table>
+    <div class="d-flex justify-content-between align-items-center mt-2">
+        <div class="text-muted">
+            Showing @((Model.page - 1) * Model.pageSize + 1)–@(Math.Min(Model.page * Model.pageSize, Model.Total)) of @Model.Total
+        </div>
+        <div>
+            <a class="btn btn-sm btn-outline-secondary me-2 @(Model.page <= 1 ? "disabled" : "")"
+               asp-page="./Index"
+               asp-route-page="@(Model.page - 1)"
+               asp-route-pageSize="@Model.pageSize"
+               asp-route-Sort="@Model.Sort"
+               asp-route-Dir="@Model.Dir"
+               asp-route-Status="@(Model.Status?.ToString())"
+               asp-route-Priority="@(Model.Priority?.ToString())"
+               asp-route-Department="@Model.Department"
+               asp-route-q="@Model.q">Prev</a>
+
+            <a class="btn btn-sm btn-outline-secondary @(Model.page >= Model.TotalPages ? "disabled" : "")"
+               asp-page="./Index"
+               asp-route-page="@(Model.page + 1)"
+               asp-route-pageSize="@Model.pageSize"
+               asp-route-Sort="@Model.Sort"
+               asp-route-Dir="@Model.Dir"
+               asp-route-Status="@(Model.Status?.ToString())"
+               asp-route-Priority="@(Model.Priority?.ToString())"
+               asp-route-Department="@Model.Department"
+               asp-route-q="@Model.q">Next</a>
+        </div>
+    </div>
 }

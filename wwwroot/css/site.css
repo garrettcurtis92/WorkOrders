@@ -20,3 +20,39 @@ html {
 body {
   margin-bottom: 60px;
 }
+
+.status-badge {
+    display: inline-block;
+    font-size: .75rem;
+    font-weight: 600;
+    padding: 2px 8px;
+    border-radius: 12px;
+    line-height: 1.2;
+    border: 1px solid transparent;
+    text-transform: none;
+    letter-spacing: .25px;
+}
+
+.status-completed {
+    background: #198754;
+    color: #fff;
+    border-color: #157347;
+}
+
+.status-inprogress {
+    background: #ffc107;
+    color: #212529;
+    border-color: #ffca2c;
+}
+
+.status-new {
+    background: #0d6efd;
+    color: #fff;
+    border-color: #0a58ca;
+}
+
+.status-default {
+    background: #e9ecef;
+    color: #212529;
+    border-color: #d3d9df;
+}
