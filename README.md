@@ -1,39 +1,39 @@
 # WorkOrders
 
-A simple ASP.NET Core (net8.0) Razor Pages application for managing work orders.
+Simple ASP.NET Core 8 Razor Pages application to manage Work Orders.
 
 ## Features
-- EF Core with SQLite (`app.db` local dev database)
-- Basic Razor Pages scaffold (Index, About, etc.)
-- WorkOrders model & migrations
+- Create / Read / Update / Delete work orders
+- Filter by Status, Priority, Department
+- Full-text search (title & description)
+- Column sorting (Title, Dept, Priority, Status, Updated)
+- Pagination with query parameters
+- Colored status badges (New=Blue, In Progress=Yellow, Completed=Green)
+- Basic validation (DataAnnotations)
 
-## Local Development
-1. Ensure .NET 8 SDK is installed.
-2. (Optional) Update connection string in `appsettings.Development.json`.
-3. Run database migrations (if not already created):
-   ```bash
-   dotnet ef database update
-   ```
-4. Run the app:
-   ```bash
-   dotnet run
-   ```
+## Tech Stack
+- ASP.NET Core 8 (Razor Pages)
+- C#
+- Bootstrap 5
+- (Planned) EF Core + SQLite
 
-The site will launch on the ports defined in `Properties/launchSettings.json`.
-
-## Entity Framework Core
-Add a migration:
+## Running
 ```bash
-dotnet ef migrations add MeaningfulName
+dotnet restore
+dotnet run
 ```
-Update database:
-```bash
-dotnet ef database update
-```
+Navigate to http://localhost:5000 (or https://localhost:7000).
 
-## Git Hygiene
-- `app.db` and `appsettings.Development.json` are excluded from version control.
-- Migrations are committed.
+## Tests
+(Planned) Filtering & sorting service tests and PageModel handler tests.
+
+## Roadmap
+- Persist data (EF Core SQLite + migrations)
+- Authentication/Authorization
+- Export (CSV / JSON)
+- API endpoints
+- Unit & integration tests
+- CI with GitHub Actions
 
 ## License
-MIT (add a LICENSE file if you intend to open source).
+MIT
