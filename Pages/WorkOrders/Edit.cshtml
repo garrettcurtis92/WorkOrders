@@ -1,48 +1,52 @@
 @page "{id:int}"
 @model EditModel
 @{
-    ViewData["Title"] = "Edit Work Order";
+  ViewData["Title"] = "Edit Work Order";
+  /* 
+     Similar to Create page but includes hidden Id and posts to update existing record.
+     Model fetched in OnGetAsync(id) in code-behind. Validation handled server-side.
+  */
 }
 <h1>Edit Work Order</h1>
 <hr />
 
-<form method="post">
+<form method="post"> @* POST triggers OnPostAsync to persist edits *@
   <div asp-validation-summary="ModelOnly" class="text-danger"></div>
   <input type="hidden" asp-for="WorkOrder.Id" />
 
-  <div class="mb-3">
+  <div class="mb-3"> @* Title *@
     <label asp-for="WorkOrder.Title" class="form-label"></label>
     <input asp-for="WorkOrder.Title" class="form-control" />
     <span asp-validation-for="WorkOrder.Title" class="text-danger"></span>
   </div>
 
-  <div class="mb-3">
+  <div class="mb-3"> @* Description *@
     <label asp-for="WorkOrder.Description" class="form-label"></label>
     <textarea asp-for="WorkOrder.Description" class="form-control" rows="4"></textarea>
     <span asp-validation-for="WorkOrder.Description" class="text-danger"></span>
   </div>
 
-  <div class="mb-3">
+  <div class="mb-3"> @* Department *@
     <label asp-for="WorkOrder.Department" class="form-label"></label>
     <input asp-for="WorkOrder.Department" class="form-control" />
     <span asp-validation-for="WorkOrder.Department" class="text-danger"></span>
   </div>
 
-  <div class="mb-3">
+  <div class="mb-3"> @* Priority enum *@
     <label asp-for="WorkOrder.Priority" class="form-label"></label>
     <select asp-for="WorkOrder.Priority" class="form-select"
             asp-items="Html.GetEnumSelectList<WorkOrderPriority>()"></select>
     <span asp-validation-for="WorkOrder.Priority" class="text-danger"></span>
   </div>
 
-  <div class="mb-3">
+  <div class="mb-3"> @* Status enum *@
     <label asp-for="WorkOrder.Status" class="form-label"></label>
     <select asp-for="WorkOrder.Status" class="form-select"
             asp-items="Html.GetEnumSelectList<WorkOrderStatus>()"></select>
     <span asp-validation-for="WorkOrder.Status" class="text-danger"></span>
   </div>
 
-  <div class="mb-3">
+  <div class="mb-3"> @* Requested by *@
     <label asp-for="WorkOrder.RequestedBy" class="form-label"></label>
     <input asp-for="WorkOrder.RequestedBy" class="form-control" />
     <span asp-validation-for="WorkOrder.RequestedBy" class="text-danger"></span>

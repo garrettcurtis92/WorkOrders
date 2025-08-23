@@ -16,6 +16,7 @@ public class DeleteModel : PageModel
 
     public async Task<IActionResult> OnGetAsync(int id)
     {
+        // Load entity to confirm deletion
         WorkOrder = await _db.WorkOrders.FindAsync(id);
         if (WorkOrder == null) return NotFound();
         return Page();
@@ -23,6 +24,7 @@ public class DeleteModel : PageModel
 
     public async Task<IActionResult> OnPostAsync(int id)
     {
+        // Re-fetch to ensure it still exists (avoids deleting already-removed record)
         var item = await _db.WorkOrders.FindAsync(id);
         if (item == null) return NotFound();
 

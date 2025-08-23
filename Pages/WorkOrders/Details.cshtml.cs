@@ -14,6 +14,7 @@ public class DetailsModel : PageModel
 
     public async Task<IActionResult> OnGetAsync(int id)
     {
+        // Find by PK; 404 if missing to align with REST semantics
         WorkOrder = await _db.WorkOrders.FindAsync(id);
         if (WorkOrder == null) return NotFound();
         return Page();

@@ -2,6 +2,10 @@
 @model DeleteModel
 @{
     ViewData["Title"] = "Delete Work Order";
+    /* 
+       Confirmation page shown before deletion. POST submits to OnPostAsync(id).
+       Defensive null check if entity not found (e.g., already deleted in another session).
+    */
 }
 <h1>Delete Work Order</h1>
 <hr />
@@ -13,7 +17,7 @@
 else
 {
     <p>Are you sure you want to delete <strong>@Model.WorkOrder.Title</strong>?</p>
-    <form method="post">
+    <form method="post"> @* POST: performs deletion and redirects with TempData Message *@
         <button type="submit" class="btn btn-danger">Yes, delete</button>
         <a asp-page="Index" class="btn btn-outline-secondary ms-2">Cancel</a>
     </form>

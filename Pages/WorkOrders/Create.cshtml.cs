@@ -19,14 +19,13 @@ public class CreateModel : PageModel
 
     public async Task<IActionResult> OnPostAsync()
     {
-        if (!ModelState.IsValid)
-        {
-            return Page(); // show validation errors
-        }
+        // Return page with validation messages if model binding / data annotations fail
+        if (!ModelState.IsValid) return Page();
 
+        // Add entity; CreatedAt / UpdatedAt set via model / EF (if configured elsewhere)
         _db.WorkOrders.Add(WorkOrder);
         await _db.SaveChangesAsync();
-        Message = "Work order created.";
+        Message = "Work order created."; // TempData message shown on index list
         return RedirectToPage("Index");
     }
 }

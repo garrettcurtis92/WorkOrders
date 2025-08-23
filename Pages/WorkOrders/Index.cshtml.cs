@@ -35,7 +35,7 @@ public class IndexModel : PageModel
 
     public async Task OnGetAsync()
     {
-        // Build Department dropdown
+        // 1. Build Department dropdown (distinct values for filter UI)
         Departments = await _db.WorkOrders
             .AsNoTracking()
             .Select(w => w.Department)
@@ -43,20 +43,20 @@ public class IndexModel : PageModel
             .OrderBy(d => d)
             .ToListAsync();
 
-        // Base query
+        // 2. Start from base query (AsNoTracking for read-only performance)
         var query = _db.WorkOrders.AsNoTracking().AsQueryable();
 
-        // Filters
+        // 3. Apply optional filters from query string (null checks keep them optional)
         if (Status.HasValue)   query = query.Where(w => w.Status == Status.Value);
         if (Priority.HasValue) query = query.Where(w => w.Priority == Priority.Value);
         if (!string.IsNullOrWhiteSpace(Department)) query = query.Where(w => w.Department == Department);
         if (!string.IsNullOrWhiteSpace(q)) query = query.Where(w => w.Title.Contains(q) || w.Description.Contains(q));
 
-        // Defaults
+        // 4. Provide default sort field + direction if not supplied
         Sort ??= "updated";
         Dir ??= "desc";
 
-        // Sorting
+        // 5. Translate (Sort, Dir) into an ordered query (switch expression keeps logic compact)
         (string s, string d) key = (Sort.ToLower(), Dir.ToLower());
         query = key switch
         {
@@ -75,17 +75,17 @@ public class IndexModel : PageModel
             _                      => query.OrderByDescending(w => w.UpdatedAt)
         };
 
-        // Total count BEFORE pagination
+    // 6. Materialize total count BEFORE pagination (for pager UI)
         Total = await query.CountAsync();
 
-        // Clamp page values
+    // 7. Defensive clamping of pagination inputs (avoid invalid or huge requests)
         if (pageSize < 1) pageSize = 10;
         if (pageSize > 200) pageSize = 200;
         if (page < 1) page = 1;
         var maxPage = TotalPages;
         if (page > maxPage && maxPage > 0) page = maxPage;
 
-        // Pagination
+    // 8. Apply Skip/Take for pagination and execute final query
         Items = await query
             .Skip((page - 1) * pageSize)
             .Take(pageSize)

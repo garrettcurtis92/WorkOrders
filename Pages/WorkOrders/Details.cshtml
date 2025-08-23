@@ -2,6 +2,10 @@
 @model DetailsModel
 @{
     ViewData["Title"] = "Work Order Details";
+    /* 
+       Read-only display of a single work order. Loaded in OnGetAsync(id).
+       Simple definition list for clarity. Could be extended with history or comments.
+    */
 }
 <h1>Work Order Details</h1>
 <hr />
@@ -12,7 +16,7 @@
 }
 else
 {
-    <dl class="row">
+    <dl class="row"> @* Definition list maps labels to values *@
         <dt class="col-sm-3">Title</dt>
         <dd class="col-sm-9">@Model.WorkOrder.Title</dd>
 
