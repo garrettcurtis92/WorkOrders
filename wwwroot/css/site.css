@@ -1,58 +1,43 @@
-html {
-  font-size: 14px;
+
+.page-card {
+  background: var(--bs-body-bg);
+  border-radius: 1rem;
+  box-shadow: 0 6px 20px rgba(0,0,0,.06);
+  padding: 1.25rem;
 }
 
-@media (min-width: 768px) {
-  html {
-    font-size: 16px;
-  }
+.empty {
+  border: 2px dashed rgba(0,0,0,.12);
+  border-radius: 1rem;
+  padding: 2rem;
+  text-align: center;
+  color: #6c757d;
 }
 
-.btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
-  box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
+/* Status & priority pill helpers (use with your helper methods) */
+.badge-status-new        { background-color: var(--bs-secondary); }
+.badge-status-progress   { background-color: var(--bs-warning); color: #000; }
+.badge-status-done       { background-color: var(--bs-success); }
+
+.badge-priority-low      { background-color: var(--bs-info); }
+.badge-priority-medium   { background-color: var(--bs-primary); }
+.badge-priority-high     { background-color: #fd7e14; }
+.badge-priority-critical { background-color: var(--bs-danger); }
+
+@media print {
+  header, footer, .btn, .no-print { display: none !important; }
+  main.container { max-width: 100% !important; }
 }
 
-html {
-  position: relative;
-  min-height: 100%;
+/* Brand color overrides (Idaho-inspired deep blue + gold) */
+:root {
+  --bs-primary: #003f87;
+  --bs-primary-rgb: 0,63,135;
+  --bs-warning: #d4af37;
+  --bs-warning-rgb: 212,175,55;
 }
 
-body {
-  margin-bottom: 60px;
-}
-
-.status-badge {
-    display: inline-block;
-    font-size: .75rem;
-    font-weight: 600;
-    padding: 2px 8px;
-    border-radius: 12px;
-    line-height: 1.2;
-    border: 1px solid transparent;
-    text-transform: none;
-    letter-spacing: .25px;
-}
-
-.status-completed {
-    background: #198754;
-    color: #fff;
-    border-color: #157347;
-}
-
-.status-inprogress {
-    background: #ffc107;
-    color: #212529;
-    border-color: #ffca2c;
-}
-
-.status-new {
-    background: #0d6efd;
-    color: #fff;
-    border-color: #0a58ca;
-}
-
-.status-default {
-    background: #e9ecef;
-    color: #212529;
-    border-color: #d3d9df;
+/* Ensure buttons and links reflect new primary */
+.btn-primary, .btn-primary:focus, .btn-primary:hover {
+  color: #fff;
 }
