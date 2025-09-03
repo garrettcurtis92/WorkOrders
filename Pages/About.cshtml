@@ -3,6 +3,45 @@
 @{
     ViewData["Title"] = "About";
 }
-<h1>@ViewData["Title"]</h1>
 
-<p>This page is for the about section</p>
+<h1 class="mb-3">About This Project</h1>
+
+<p>
+    This small web app is a Work Order tracker I built to practice and demonstrate core
+    CRUD (Create, Read, Update, Delete) functionality using ASP.NET Core Razor Pages.
+    I wanted something simple and practical: a list of work orders that I can
+    create, edit, view in detail, and delete—plus the ability to filter, search,
+    sort, and paginate the results.
+</p>
+
+<p>
+    The goal was to show that I understand how to:
+</p>
+
+<ul>
+    <li>Display data in a table with clean formatting</li>
+    <li>Create and edit records with forms</li>
+    <li>Use enums for Status and Priority and show them with colored badges</li>
+    <li>Filter by status, priority, department, and search text</li>
+    <li>Sort by multiple columns (title, department, priority, status, dates)</li>
+    <li>Handle pagination (page number and page size)</li>
+    <li>Pass state through the query string so pages can be bookmarked/shared</li>
+</ul>
+
+<p>
+    This is intentionally focused and easy to read—good for a junior-level code review.
+    Next improvements I would make:
+</p>
+
+<ul>
+    <li>Add a real database (EF Core + SQLite)</li>
+    <li>Add validation messages and stronger input rules</li>
+    <li>Add authentication so only certain users can edit/delete</li>
+    <li>Add unit tests for the filtering and sorting logic</li>
+    <li>Expose a simple API endpoint for integration</li>
+</ul>
+
+<p>
+    Thanks for reviewing the project. I built it to show practical fundamentals:
+    data modeling, page handlers, query-based filtering, and clean, readable Razor markup.
+</p>
